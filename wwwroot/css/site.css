@@ -82,6 +82,20 @@ body {
     color: #991B1B;
 }
 
+/* Ocultar sección de inicio de sesión externo de Identity (el cuadro molesto de Microsoft) */
+.col-md-6.col-md-offset-2 {
+    display: none !important;
+}
+
+h3:contains("Use another service to log in.") {
+    display: none !important;
+}
+
+/* Ocultar enlace de reenvío de confirmación de email (ya no lo usamos) */
+a[id="resend-confirmation"] {
+    display: none !important;
+}
+
 /* Clean up footer */
 .footer {
   position: absolute;

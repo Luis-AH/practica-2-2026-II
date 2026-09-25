@@ -86,42 +86,44 @@
             }
             else
             {
-                <table class="table table-hover mb-0">
-                    <thead style="background-color:#f8f9fa;">
-                        <tr>
-                            <th class="px-4 py-3 small fw-semibold text-muted">#</th>
-                            <th class="py-3 small fw-semibold text-muted">Monto Solicitado</th>
-                            <th class="py-3 small fw-semibold text-muted">Fecha</th>
-                            <th class="py-3 small fw-semibold text-muted">Estado</th>
-                            <th class="py-3 small fw-semibold text-muted">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var s in Model.Solicitudes)
-                        {
-                            <tr id="solicitud-row-@s.Id">
-                                <td class="px-4 py-3 text-muted" style="font-size:0.85rem;">@s.Id</td>
-                                <td class="py-3 fw-medium">S/ @s.MontoSolicitado.ToString("N2")</td>
-                                <td class="py-3 text-muted" style="font-size:0.9rem;">@s.FechaSolicitud.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
-                                <td class="py-3">
-                                    @{
-                                        var (badgeClass, badgeText) = s.Estado switch
-                                        {
-                                            EstadoSolicitud.Pendiente => ("badge-pendiente", "Pendiente"),
-                                            EstadoSolicitud.Aprobado  => ("badge-aprobado", "Aprobado"),
-                                            EstadoSolicitud.Rechazado => ("badge-rechazado", "Rechazado"),
-                                            _ => ("bg-secondary", s.Estado.ToString())
-                                        };
-                                    }
-                                    <span class="badge-estado @badgeClass">@badgeText</span>
-                                </td>
-                                <td class="py-3">
-                                    <a asp-action="Detalle" asp-route-id="@s.Id" class="btn btn-sm btn-outline-secondary">Ver detalle</a>
-                                </td>
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead style="background-color:#f8f9fa;">
+                            <tr>
+                                <th class="px-4 py-3 small fw-semibold text-muted">#</th>
+                                <th class="py-3 small fw-semibold text-muted">Monto Solicitado</th>
+                                <th class="py-3 small fw-semibold text-muted">Fecha</th>
+                                <th class="py-3 small fw-semibold text-muted">Estado</th>
+                                <th class="py-3 small fw-semibold text-muted">Acciones</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach (var s in Model.Solicitudes)
+                            {
+                                <tr id="solicitud-row-@s.Id">
+                                    <td class="px-4 py-3 text-muted" style="font-size:0.85rem;">@s.Id</td>
+                                    <td class="py-3 fw-medium">S/ @s.MontoSolicitado.ToString("N2")</td>
+                                    <td class="py-3 text-muted" style="font-size:0.9rem;">@s.FechaSolicitud.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
+                                    <td class="py-3">
+                                        @{
+                                            var (badgeClass, badgeText) = s.Estado switch
+                                            {
+                                                EstadoSolicitud.Pendiente => ("badge-pendiente", "Pendiente"),
+                                                EstadoSolicitud.Aprobado  => ("badge-aprobado", "Aprobado"),
+                                                EstadoSolicitud.Rechazado => ("badge-rechazado", "Rechazado"),
+                                                _ => ("bg-secondary", s.Estado.ToString())
+                                            };
+                                        }
+                                        <span class="badge-estado @badgeClass">@badgeText</span>
+                                    </td>
+                                    <td class="py-3">
+                                        <a asp-action="Detalle" asp-route-id="@s.Id" class="btn btn-sm btn-outline-secondary">Ver detalle</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             }
         </div>
     </div>

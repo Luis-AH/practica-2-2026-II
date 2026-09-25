@@ -12,14 +12,14 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark custom-navbar box-shadow mb-4">
+        <nav class="navbar navbar-expand-lg navbar-toggleable-lg navbar-dark custom-navbar box-shadow mb-4">
             <div class="container">
                 <a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">IBK Créditos</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="navbar-collapse collapse d-lg-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
@@ -78,6 +78,20 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function() {
+            if (window.location.pathname.toLowerCase().includes('/identity/account/')) {
+                // Ocultar la sección de login externo que incluye el texto de Microsoft
+                $("h3:contains('Use another service to log in.')").parent().parent().hide();
+                // En su defecto si cambia la estructura, ocultar el contenedor lateral
+                $(".col-md-6.col-md-offset-2").hide();
+                $(".col-md-6.offset-md-2").hide();
+                
+                // Ocultar el enlace de reenviar correo de confirmación
+                $("a#resend-confirmation").hide();
+            }
+        });
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

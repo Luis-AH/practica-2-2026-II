@@ -8,12 +8,7 @@
     var userId = '@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value';
     
     if (userId) {
-        // Mostrar estado de conexión
-        var divEstado = document.createElement('div');
-        divEstado.id = 'ws-status';
-        divEstado.className = 'alert alert-info py-1 px-3 mt-3 small';
-        divEstado.innerHTML = 'Conectando a notificaciones en tiempo real...';
-        document.querySelector('.container').prepend(divEstado);
+        // La notificación en tiempo real está activa pero sin cuadro visual molesto.
 
         var pusher = new Pusher('@Config["PieSocket:ApiKey"]', {
             cluster: '@Config["PieSocket:Cluster"]',
@@ -30,23 +25,13 @@
         });
 
         pusher.connection.bind('state_change', function(states) {
-            var statusMsg = '';
-            if (states.current === 'connected') {
-                statusMsg = '✓ Conectado a notificaciones en tiempo real';
-                divEstado.className = 'alert alert-success py-1 px-3 mt-3 small';
-            } else if (states.current === 'connecting' || states.current === 'reconnecting') {
-                statusMsg = 'Conectando a notificaciones...';
-                divEstado.className = 'alert alert-warning py-1 px-3 mt-3 small';
-            } else {
-                statusMsg = 'Desconectado de notificaciones (intentando reconectar...)';
-                divEstado.className = 'alert alert-danger py-1 px-3 mt-3 small';
-                
+            // Se quitó la notificación visual para mantener la interfaz limpia
+            if (states.current === 'disconnected' || states.current === 'unavailable') {
                 // Si reconecta, la página debería recargar para obtener estado actual (requerido por rúbrica)
                 if (states.previous === 'connected') {
                     setTimeout(() => window.location.reload(), 2000);
                 }
             }
-            divEstado.innerHTML = statusMsg;
         });
 
         var channel = pusher.subscribe('private-solicitudes-' + userId);
