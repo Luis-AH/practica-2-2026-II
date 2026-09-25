@@ -1,0 +1,60 @@
+@model PlataformaCreditos.Models.SolicitudCredito
+@using PlataformaCreditos.Models
+
+@{
+    ViewData["Title"] = "Detalle de Solicitud #" + Model.Id;
+    var (badgeClass, badgeText) = Model.Estado switch
+    {
+        EstadoSolicitud.Pendiente => ("badge-pendiente", "Pendiente"),
+        EstadoSolicitud.Aprobado  => ("badge-aprobado", "Aprobado"),
+        EstadoSolicitud.Rechazado => ("badge-rechazado", "Rechazado"),
+        _ => ("bg-secondary", Model.Estado.ToString())
+    };
+}
+
+<div class="container py-4" style="max-width:720px;">
+    <div class="mb-4">
+        <a asp-action="MisSolicitudes" class="text-decoration-none small text-muted">
+            &larr; Volver a Mis Solicitudes
+        </a>
+    </div>
+
+    <div class="card">
+        <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-start mb-4">
+                <div>
+                    <h1 class="h4 fw-semibold mb-1" style="color:#1a1a1a;">Solicitud #@Model.Id</h1>
+                    <p class="text-muted mb-0" style="font-size:0.875rem;">
+                        Registrada el @Model.FechaSolicitud.ToLocalTime().ToString("dd 'de' MMMM 'de' yyyy", new System.Globalization.CultureInfo("es-PE"))
+                    </p>
+                </div>
+                <span class="badge-estado @badgeClass fs-6">@badgeText</span>
+            </div>
+
+            <hr class="my-3"/>
+
+            <div class="row g-4">
+                <div class="col-sm-6">
+                    <p class="text-muted small fw-medium mb-1">Monto Solicitado</p>
+                    <p class="fs-4 fw-semibold mb-0" style="color:#00A45D;">S/ @Model.MontoSolicitado.ToString("N2")</p>
+                </div>
+                <div class="col-sm-6">
+                    <p class="text-muted small fw-medium mb-1">Estado</p>
+                    <p class="mb-0 fw-medium">@badgeText</p>
+                </div>
+                <div class="col-sm-6">
+                    <p class="text-muted small fw-medium mb-1">Fecha de Solicitud</p>
+                    <p class="mb-0">@Model.FechaSolicitud.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</p>
+                </div>
+            </div>
+
+            @if (Model.Estado == EstadoSolicitud.Rechazado && !string.IsNullOrEmpty(Model.MotivoRechazo))
+            {
+                <div class="alert alert-danger mt-4 mb-0" role="alert">
+                    <p class="fw-semibold mb-1">Motivo de rechazo</p>
+                    <p class="mb-0">@Model.MotivoRechazo</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>

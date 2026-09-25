@@ -1,0 +1,120 @@
+@model PlataformaCreditos.Models.ViewModels.SolicitudFiltroViewModel
+@using PlataformaCreditos.Models
+
+@{
+    ViewData["Title"] = "Mis Solicitudes";
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 fw-semibold mb-0" style="color:#1a1a1a;">Mis Solicitudes</h1>
+            <p class="text-muted mb-0" style="font-size:0.9rem;">Historial de tus solicitudes de crédito</p>
+        </div>
+        <a asp-action="Nueva" class="btn btn-primary px-4">Nueva solicitud</a>
+    </div>
+
+    @* Filtros *@
+    <div class="card mb-4">
+        <div class="card-body">
+            <h6 class="fw-semibold mb-3" style="color:#00A45D;">Filtrar solicitudes</h6>
+            <form method="get" id="filtroForm">
+                <div class="row g-3">
+                    <div class="col-md-2">
+                        <label class="form-label small fw-medium">Estado</label>
+                        <select name="Estado" class="form-select form-select-sm">
+                            <option value="">Todos</option>
+                            @foreach (EstadoSolicitud estado in Enum.GetValues(typeof(EstadoSolicitud)))
+                            {
+                                <option value="@((int)estado)" selected="@(Model.Estado == estado)">@estado</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label small fw-medium">Monto mínimo</label>
+                        <input type="number" name="MontoMinimo" value="@Model.MontoMinimo" class="form-control form-control-sm" placeholder="S/ 0.00" step="0.01" min="0" />
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label small fw-medium">Monto máximo</label>
+                        <input type="number" name="MontoMaximo" value="@Model.MontoMaximo" class="form-control form-control-sm" placeholder="S/ 0.00" step="0.01" min="0" />
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label small fw-medium">Fecha desde</label>
+                        <input type="date" name="FechaDesde" value="@Model.FechaDesde?.ToString("yyyy-MM-dd")" class="form-control form-control-sm" />
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label small fw-medium">Fecha hasta</label>
+                        <input type="date" name="FechaHasta" value="@Model.FechaHasta?.ToString("yyyy-MM-dd")" class="form-control form-control-sm" />
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end gap-2">
+                        <button type="submit" class="btn btn-primary btn-sm w-100">Filtrar</button>
+                        <a asp-action="MisSolicitudes" class="btn btn-outline-secondary btn-sm w-100">Limpiar</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    @* Mensaje de error de filtros *@
+    @if (!string.IsNullOrEmpty(Model.ErrorFiltro))
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Error en los filtros:</strong> @Model.ErrorFiltro
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @* Tabla de solicitudes *@
+    <div class="card">
+        <div class="card-body p-0">
+            @if (Model.Solicitudes.Count == 0)
+            {
+                <div class="text-center py-5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="#ced4da" class="bi bi-inbox mb-3" viewBox="0 0 16 16">
+                        <path d="M4.98 4a.5.5 0 0 0-.39.188L1.54 8H6a.5.5 0 0 1 .5.5 1.5 1.5 0 0 0 3 0A.5.5 0 0 1 10 8h4.46l-3.05-3.812A.5.5 0 0 0 11.02 4H4.98zm9.954 5H10.45a2.5 2.5 0 0 1-4.9 0H1.066l.32 2.562a.5.5 0 0 0 .497.438h12.234a.5.5 0 0 0 .496-.438L14.933 9zM3.809 3.563A1.5 1.5 0 0 1 4.981 3H11.02a1.5 1.5 0 0 1 1.172.563l3.7 4.625a.5.5 0 0 1 .105.374l-.39 3.124A1.5 1.5 0 0 1 14.117 13H1.883a1.5 1.5 0 0 1-1.489-1.314L.005 8.562a.5.5 0 0 1 .106-.374l3.7-4.625z"/>
+                    </svg>
+                    <p class="text-muted mb-0">No se encontraron solicitudes con los filtros aplicados.</p>
+                </div>
+            }
+            else
+            {
+                <table class="table table-hover mb-0">
+                    <thead style="background-color:#f8f9fa;">
+                        <tr>
+                            <th class="px-4 py-3 small fw-semibold text-muted">#</th>
+                            <th class="py-3 small fw-semibold text-muted">Monto Solicitado</th>
+                            <th class="py-3 small fw-semibold text-muted">Fecha</th>
+                            <th class="py-3 small fw-semibold text-muted">Estado</th>
+                            <th class="py-3 small fw-semibold text-muted">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var s in Model.Solicitudes)
+                        {
+                            <tr>
+                                <td class="px-4 py-3 text-muted" style="font-size:0.85rem;">@s.Id</td>
+                                <td class="py-3 fw-medium">S/ @s.MontoSolicitado.ToString("N2")</td>
+                                <td class="py-3 text-muted" style="font-size:0.9rem;">@s.FechaSolicitud.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
+                                <td class="py-3">
+                                    @{
+                                        var (badgeClass, badgeText) = s.Estado switch
+                                        {
+                                            EstadoSolicitud.Pendiente => ("badge-pendiente", "Pendiente"),
+                                            EstadoSolicitud.Aprobado  => ("badge-aprobado", "Aprobado"),
+                                            EstadoSolicitud.Rechazado => ("badge-rechazado", "Rechazado"),
+                                            _ => ("bg-secondary", s.Estado.ToString())
+                                        };
+                                    }
+                                    <span class="badge-estado @badgeClass">@badgeText</span>
+                                </td>
+                                <td class="py-3">
+                                    <a asp-action="Detalle" asp-route-id="@s.Id" class="btn btn-sm btn-outline-secondary">Ver detalle</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>
