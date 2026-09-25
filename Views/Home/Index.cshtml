@@ -1,8 +1,79 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@{
+    ViewData["Title"] = "Inicio";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<style>
+    .hero-section {
+        /* Romper el contenedor de Bootstrap para ocupar todo el ancho */
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        margin-top: -1.5rem; /* Compensar padding/margin del layout */
+        
+        /* Imagen de fondo generada */
+        background-image: url('/images/hero-bg.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        min-height: calc(100vh - 60px); 
+        display: flex;
+        align-items: center;
+    }
+    
+    .hero-card {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border: 1px solid rgba(255,255,255,0.5);
+        border-radius: 1.25rem;
+        padding: 3.5rem;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    }
+</style>
+
+<div class="hero-section">
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 hero-card">
+                <h1 class="display-5 fw-bold mb-4" style="color: #1a1a1a;">
+                    Bienvenido a IBK Créditos
+                </h1>
+                <p class="lead text-muted mb-5">
+                    La forma más rápida y segura de solicitar tu crédito personal. 
+                    Evalúa tu capacidad de pago, registra tu solicitud en minutos y recibe 
+                    notificaciones en tiempo real sobre el estado de tu evaluación.
+                </p>
+                
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+                        <a asp-controller="Solicitudes" asp-action="Nueva" class="btn btn-primary btn-lg px-4 gap-3 shadow-sm" style="background-color: #00A45D; border-color: #00A45D;">
+                            Solicitar Crédito Ahora
+                        </a>
+                        <a asp-controller="Solicitudes" asp-action="MisSolicitudes" class="btn btn-outline-secondary btn-lg px-4 shadow-sm">
+                            Ver Mis Solicitudes
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+                        <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-primary btn-lg px-4 gap-3 shadow-sm" style="background-color: #00A45D; border-color: #00A45D;">
+                            Crear una Cuenta
+                        </a>
+                        <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-outline-secondary btn-lg px-4 shadow-sm">
+                            Iniciar Sesión
+                        </a>
+                    </div>
+                    
+                    <p class="mt-4 text-muted small">
+                        Para iniciar una solicitud de crédito, necesitas registrarte primero en nuestra plataforma.
+                    </p>
+                }
+            </div>
+        </div>
+    </div>
 </div>
