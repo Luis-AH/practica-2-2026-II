@@ -6,6 +6,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using PlataformaCreditos.Data;
 using PlataformaCreditos.Models;
 using PlataformaCreditos.Models.ViewModels;
+using PlataformaCreditos.Services;
 using System.Text.Json;
 
 namespace PlataformaCreditos.Controllers;
@@ -16,18 +17,20 @@ public class SolicitudesController : Controller
     private readonly ApplicationDbContext _context;
     private readonly UserManager<IdentityUser> _userManager;
     private readonly IDistributedCache _cache;
+    private readonly MensajeriaService _mensajeria;
 
-    // Clave de sesión para la última solicitud visitada
     private const string SessionKeyUltimaSolicitud = "UltimaSolicitudMonto";
 
     public SolicitudesController(
         ApplicationDbContext context,
         UserManager<IdentityUser> userManager,
-        IDistributedCache cache)
+        IDistributedCache cache,
+        MensajeriaService mensajeria)
     {
         _context = context;
         _userManager = userManager;
         _cache = cache;
+        _mensajeria = mensajeria;
     }
 
     // Clave de caché por cliente
@@ -194,8 +197,11 @@ public class SolicitudesController : Controller
         _context.Solicitudes.Add(nuevaSolicitud);
         await _context.SaveChangesAsync();
 
-        // --- Invalidar caché al crear nueva solicitud ---
+        // Invalidar caché al crear nueva solicitud
         await _cache.RemoveAsync(CacheKeySolicitudes(cliente.Id));
+
+        // Publicar mensaje asíncrono a RabbitMQ (notificación de creación)
+        await _mensajeria.PublicarSolicitudCreadaAsync(nuevaSolicitud.Id, user.Id, model.MontoSolicitado);
 
         TempData["SuccessMessage"] = "Tu solicitud de crédito ha sido registrada exitosamente y se encuentra en evaluación.";
         return RedirectToAction(nameof(MisSolicitudes));

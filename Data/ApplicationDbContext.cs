@@ -8,6 +8,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 {
     public DbSet<Cliente> Clientes { get; set; }
     public DbSet<SolicitudCredito> Solicitudes { get; set; }
+    public DbSet<Notificacion> Notificaciones { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -18,6 +19,11 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         builder.Entity<SolicitudCredito>()
             .HasIndex(s => s.ClienteId)
             .HasFilter("[Estado] = 0")
+            .IsUnique();
+
+        // Regla: Unicidad de MessageId para evitar procesar notificaciones duplicadas
+        builder.Entity<Notificacion>()
+            .HasIndex(n => n.MessageId)
             .IsUnique();
     }
 }

@@ -16,6 +16,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddSingleton<PlataformaCreditos.Services.NotificacionesService>();
+builder.Services.AddScoped<PlataformaCreditos.Services.MensajeriaService>();
+builder.Services.AddHostedService<PlataformaCreditos.Services.NotificacionesConsumerService>();
 
 // Configurar Redis para caché distribuida
 var redisConnection = builder.Configuration.GetConnectionString("RedisConnection")!;
