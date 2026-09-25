@@ -279,3 +279,6 @@ C:\Users\LUIS\Documents\proyectos Progra I\Practica-2\obj\Debug\net10.0\Platafor
 C:\Users\LUIS\Documents\proyectos Progra I\Practica-2\obj\Debug\net10.0\ref\PlataformaCreditos.dll
 C:\Users\LUIS\Documents\proyectos Progra I\Practica-2\obj\Debug\net10.0\PlataformaCreditos.sourcelink.json
 C:\Users\LUIS\Documents\proyectos Progra I\Practica-2\obj\Debug\net10.0\compressed\crqlq1k8iz-{0}-py2467reo6-py2467reo6.gz
+C:\Users\LUIS\Documents\proyectos Progra I\Practica-2\bin\Debug\net10.0\Microsoft.Extensions.Caching.StackExchangeRedis.dll
+C:\Users\LUIS\Documents\proyectos Progra I\Practica-2\bin\Debug\net10.0\Pipelines.Sockets.Unofficial.dll
+C:\Users\LUIS\Documents\proyectos Progra I\Practica-2\bin\Debug\net10.0\StackExchange.Redis.dll

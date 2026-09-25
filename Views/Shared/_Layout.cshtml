@@ -38,6 +38,25 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            @{
+                // Mostrar última solicitud visitada desde sesión
+                var ultimaSolicitud = Context.Session.GetString("UltimaSolicitudMonto");
+                if (!string.IsNullOrEmpty(ultimaSolicitud) && Context.User.Identity?.IsAuthenticated == true)
+                {
+                    var partes = ultimaSolicitud.Split('|');
+                    if (partes.Length == 3)
+                    {
+                        <div class="container mb-2">
+                            <div class="alert alert-light py-2 px-3 mb-0 d-flex align-items-center gap-2" style="border-left: 3px solid #00A45D; font-size:0.82rem; border-radius:4px;">
+                                <span class="text-muted">Última solicitud visitada:</span>
+                                <a asp-controller="Solicitudes" asp-action="Detalle" asp-route-id="@partes[0]" class="fw-semibold text-decoration-none" style="color:#00A45D;">
+                                    S/ @partes[1] — @partes[2]
+                                </a>
+                            </div>
+                        </div>
+                    }
+                }
+            }
             @RenderBody()
         </main>
     </div>

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "BkWnEuzofbQ=",
+  "dgSpecHash": "VI5plg+gm2k=",
   "success": true,
   "projectFilePath": "C:\\Users\\LUIS\\Documents\\proyectos Progra I\\Practica-2\\PlataformaCreditos.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\LUIS\\.nuget\\packages\\microsoft.aspnetcore.diagnostics.entityframeworkcore\\10.0.12\\microsoft.aspnetcore.diagnostics.entityframeworkcore.10.0.12.nupkg.sha512",
     "C:\\Users\\LUIS\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\10.0.12\\microsoft.aspnetcore.identity.entityframeworkcore.10.0.12.nupkg.sha512",
     "C:\\Users\\LUIS\\.nuget\\packages\\microsoft.aspnetcore.identity.ui\\10.0.12\\microsoft.aspnetcore.identity.ui.10.0.12.nupkg.sha512",
+    "C:\\Users\\LUIS\\.nuget\\packages\\microsoft.aspnetcore.session\\2.3.13\\microsoft.aspnetcore.session.2.3.13.nupkg.sha512",
     "C:\\Users\\LUIS\\.nuget\\packages\\microsoft.build.framework\\18.0.2\\microsoft.build.framework.18.0.2.nupkg.sha512",
     "C:\\Users\\LUIS\\.nuget\\packages\\microsoft.codeanalysis.analyzers\\3.11.0\\microsoft.codeanalysis.analyzers.3.11.0.nupkg.sha512",
     "C:\\Users\\LUIS\\.nuget\\packages\\microsoft.codeanalysis.common\\5.0.0\\microsoft.codeanalysis.common.5.0.0.nupkg.sha512",
@@ -24,15 +25,18 @@
     "C:\\Users\\LUIS\\.nuget\\packages\\microsoft.entityframeworkcore.sqlite\\10.0.12\\microsoft.entityframeworkcore.sqlite.10.0.12.nupkg.sha512",
     "C:\\Users\\LUIS\\.nuget\\packages\\microsoft.entityframeworkcore.sqlite.core\\10.0.12\\microsoft.entityframeworkcore.sqlite.core.10.0.12.nupkg.sha512",
     "C:\\Users\\LUIS\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\10.0.12\\microsoft.entityframeworkcore.tools.10.0.12.nupkg.sha512",
+    "C:\\Users\\LUIS\\.nuget\\packages\\microsoft.extensions.caching.stackexchangeredis\\10.0.12\\microsoft.extensions.caching.stackexchangeredis.10.0.12.nupkg.sha512",
     "C:\\Users\\LUIS\\.nuget\\packages\\microsoft.extensions.dependencymodel\\10.0.12\\microsoft.extensions.dependencymodel.10.0.12.nupkg.sha512",
     "C:\\Users\\LUIS\\.nuget\\packages\\microsoft.extensions.fileproviders.embedded\\10.0.12\\microsoft.extensions.fileproviders.embedded.10.0.12.nupkg.sha512",
     "C:\\Users\\LUIS\\.nuget\\packages\\microsoft.visualstudio.solutionpersistence\\1.0.52\\microsoft.visualstudio.solutionpersistence.1.0.52.nupkg.sha512",
     "C:\\Users\\LUIS\\.nuget\\packages\\mono.texttemplating\\3.0.0\\mono.texttemplating.3.0.0.nupkg.sha512",
     "C:\\Users\\LUIS\\.nuget\\packages\\newtonsoft.json\\13.0.4\\newtonsoft.json.13.0.4.nupkg.sha512",
+    "C:\\Users\\LUIS\\.nuget\\packages\\pipelines.sockets.unofficial\\2.2.8\\pipelines.sockets.unofficial.2.2.8.nupkg.sha512",
     "C:\\Users\\LUIS\\.nuget\\packages\\sqlitepclraw.bundle_e_sqlite3\\2.1.12\\sqlitepclraw.bundle_e_sqlite3.2.1.12.nupkg.sha512",
     "C:\\Users\\LUIS\\.nuget\\packages\\sqlitepclraw.core\\2.1.12\\sqlitepclraw.core.2.1.12.nupkg.sha512",
     "C:\\Users\\LUIS\\.nuget\\packages\\sqlitepclraw.lib.e_sqlite3\\2.1.12\\sqlitepclraw.lib.e_sqlite3.2.1.12.nupkg.sha512",
     "C:\\Users\\LUIS\\.nuget\\packages\\sqlitepclraw.provider.e_sqlite3\\2.1.12\\sqlitepclraw.provider.e_sqlite3.2.1.12.nupkg.sha512",
+    "C:\\Users\\LUIS\\.nuget\\packages\\stackexchange.redis\\2.7.27\\stackexchange.redis.2.7.27.nupkg.sha512",
     "C:\\Users\\LUIS\\.nuget\\packages\\system.codedom\\6.0.0\\system.codedom.6.0.0.nupkg.sha512",
     "C:\\Users\\LUIS\\.nuget\\packages\\system.composition\\9.0.0\\system.composition.9.0.0.nupkg.sha512",
     "C:\\Users\\LUIS\\.nuget\\packages\\system.composition.attributedmodel\\9.0.0\\system.composition.attributedmodel.9.0.0.nupkg.sha512",
@@ -41,5 +45,18 @@
     "C:\\Users\\LUIS\\.nuget\\packages\\system.composition.runtime\\9.0.0\\system.composition.runtime.9.0.0.nupkg.sha512",
     "C:\\Users\\LUIS\\.nuget\\packages\\system.composition.typedparts\\9.0.0\\system.composition.typedparts.9.0.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1510",
+      "level": "Warning",
+      "message": "PackageReference Microsoft.AspNetCore.Session no se eliminará. Este paquete está disponible automáticamente y no es necesario hacer referencia a él explícitamente. Quite el elemento PackageReference.",
+      "projectPath": "C:\\Users\\LUIS\\Documents\\proyectos Progra I\\Practica-2\\PlataformaCreditos.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\LUIS\\Documents\\proyectos Progra I\\Practica-2\\PlataformaCreditos.csproj",
+      "libraryId": "Microsoft.AspNetCore.Session",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    }
+  ]
 }
