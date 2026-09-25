@@ -203,7 +203,6 @@ C:\Users\LUIS\Documents\proyectos Progra I\Practica-2\obj\Debug\net10.0\compress
 C:\Users\LUIS\Documents\proyectos Progra I\Practica-2\obj\Debug\net10.0\compressed\nezrqnk58p-{0}-muycvpuwrr-muycvpuwrr.gz
 C:\Users\LUIS\Documents\proyectos Progra I\Practica-2\obj\Debug\net10.0\compressed\v0zgfp0y55-{0}-87fc7y1x7t-87fc7y1x7t.gz
 C:\Users\LUIS\Documents\proyectos Progra I\Practica-2\obj\Debug\net10.0\compressed\yfc7ypekbg-{0}-mlv21k5csn-mlv21k5csn.gz
-C:\Users\LUIS\Documents\proyectos Progra I\Practica-2\obj\Debug\net10.0\compressed\crqlq1k8iz-{0}-b9sayid5wm-b9sayid5wm.gz
 C:\Users\LUIS\Documents\proyectos Progra I\Practica-2\obj\Debug\net10.0\compressed\z8t01kx6cw-{0}-61n19gt1b8-61n19gt1b8.gz
 C:\Users\LUIS\Documents\proyectos Progra I\Practica-2\obj\Debug\net10.0\compressed\est7ihl7e2-{0}-xtxxf3hu2r-xtxxf3hu2r.gz
 C:\Users\LUIS\Documents\proyectos Progra I\Practica-2\obj\Debug\net10.0\compressed\zw6hv8807i-{0}-bqjiyaj88i-bqjiyaj88i.gz
@@ -278,3 +277,5 @@ C:\Users\LUIS\Documents\proyectos Progra I\Practica-2\obj\Debug\net10.0\refint\P
 C:\Users\LUIS\Documents\proyectos Progra I\Practica-2\obj\Debug\net10.0\PlataformaCreditos.pdb
 C:\Users\LUIS\Documents\proyectos Progra I\Practica-2\obj\Debug\net10.0\PlataformaCreditos.genruntimeconfig.cache
 C:\Users\LUIS\Documents\proyectos Progra I\Practica-2\obj\Debug\net10.0\ref\PlataformaCreditos.dll
+C:\Users\LUIS\Documents\proyectos Progra I\Practica-2\obj\Debug\net10.0\PlataformaCreditos.sourcelink.json
+C:\Users\LUIS\Documents\proyectos Progra I\Practica-2\obj\Debug\net10.0\compressed\crqlq1k8iz-{0}-dsqr01vdcu-dsqr01vdcu.gz
