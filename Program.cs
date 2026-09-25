@@ -15,6 +15,23 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
+// Configurar Redis para caché distribuida
+var redisConnection = builder.Configuration.GetConnectionString("RedisConnection")!;
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = redisConnection;
+    options.InstanceName = "PlataformaCreditos_";
+});
+
+// Configurar sesiones respaldadas por Redis
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+    options.Cookie.Name = ".IBKCreditos.Session";
+});
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -46,6 +63,7 @@ else
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseSession(); // Debe ir ANTES de UseAuthorization
 app.UseAuthorization();
 
 app.MapStaticAssets();
