@@ -45,12 +45,13 @@ public class SolicitudesController : Controller
         var cliente = await _context.Clientes
             .FirstOrDefaultAsync(c => c.UsuarioId == user.Id);
 
+        // Auto-crear perfil de cliente si el usuario se registró directamente
         if (cliente == null)
         {
-            return View(new SolicitudFiltroViewModel
-            {
-                ErrorFiltro = "No se encontró un perfil de cliente asociado a tu cuenta."
-            });
+            cliente = new Cliente { UsuarioId = user.Id, IngresosMensuales = 0m, Activo = true };
+            _context.Clientes.Add(cliente);
+            await _context.SaveChangesAsync();
+            await _userManager.AddToRoleAsync(user, "Cliente");
         }
 
         // --- Validaciones de filtros server-side ---
@@ -161,7 +162,22 @@ public class SolicitudesController : Controller
         var cliente = await _context.Clientes.FirstOrDefaultAsync(c => c.UsuarioId == user.Id);
         if (cliente == null)
         {
-            ModelState.AddModelError("", "No se encontró el perfil de cliente asociado a tu cuenta.");
+            cliente = new Cliente { UsuarioId = user.Id, IngresosMensuales = 0m, Activo = true };
+            _context.Clientes.Add(cliente);
+            await _context.SaveChangesAsync();
+            await _userManager.AddToRoleAsync(user, "Cliente");
+        }
+
+        // Actualizar ingresos mensuales si el usuario los ingresó en el formulario
+        if (model.IngresosMensuales > 0 && cliente.IngresosMensuales != model.IngresosMensuales)
+        {
+            cliente.IngresosMensuales = model.IngresosMensuales;
+            await _context.SaveChangesAsync();
+        }
+
+        if (cliente.IngresosMensuales <= 0)
+        {
+            ModelState.AddModelError("IngresosMensuales", "Debes ingresar tus ingresos mensuales para continuar.");
             return View(model);
         }
 

@@ -12,7 +12,7 @@ public class Cliente
 
     public IdentityUser? Usuario { get; set; }
 
-    [Range(0.01, double.MaxValue, ErrorMessage = "Los ingresos mensuales deben ser mayores a 0.")]
+    [Range(0, double.MaxValue)]
     public decimal IngresosMensuales { get; set; }
 
     public bool Activo { get; set; } = true;
