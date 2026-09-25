@@ -82,9 +82,11 @@ public class SolicitudesController : Controller
             var cacheKey = CacheKeySolicitudes(cliente.Id);
             var cachedData = await _cache.GetStringAsync(cacheKey);
 
+            var jsonOptions = new JsonSerializerOptions { ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles };
+
             if (cachedData != null)
             {
-                todasLasSolicitudes = JsonSerializer.Deserialize<List<SolicitudCredito>>(cachedData)!;
+                todasLasSolicitudes = JsonSerializer.Deserialize<List<SolicitudCredito>>(cachedData, jsonOptions)!;
             }
             else
             {
@@ -97,7 +99,7 @@ public class SolicitudesController : Controller
                 {
                     AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(60)
                 };
-                await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(todasLasSolicitudes), cacheOptions);
+                await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(todasLasSolicitudes, jsonOptions), cacheOptions);
             }
 
             filtro.Solicitudes = todasLasSolicitudes;
