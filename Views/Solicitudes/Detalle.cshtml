@@ -28,7 +28,7 @@
                         Registrada el @Model.FechaSolicitud.ToLocalTime().ToString("dd 'de' MMMM 'de' yyyy", new System.Globalization.CultureInfo("es-PE"))
                     </p>
                 </div>
-                <span class="badge-estado @badgeClass fs-6">@badgeText</span>
+                <span id="detalle-badge-estado" class="badge-estado @badgeClass fs-6">@badgeText</span>
             </div>
 
             <hr class="my-3"/>
@@ -48,13 +48,14 @@
                 </div>
             </div>
 
-            @if (Model.Estado == EstadoSolicitud.Rechazado && !string.IsNullOrEmpty(Model.MotivoRechazo))
-            {
-                <div class="alert alert-danger mt-4 mb-0" role="alert">
-                    <p class="fw-semibold mb-1">Motivo de rechazo</p>
-                    <p class="mb-0">@Model.MotivoRechazo</p>
-                </div>
-            }
+            <div id="detalle-motivo" class="alert alert-danger mt-4 mb-0" role="alert" style="@(Model.Estado == EstadoSolicitud.Rechazado && !string.IsNullOrEmpty(Model.MotivoRechazo) ? "" : "display:none;")">
+                <p class="fw-semibold mb-1">Motivo de rechazo</p>
+                <p class="mb-0">@Model.MotivoRechazo</p>
+            </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_WebSocketNotificaciones" />
+}

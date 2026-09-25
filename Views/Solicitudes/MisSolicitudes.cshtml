@@ -99,7 +99,7 @@
                     <tbody>
                         @foreach (var s in Model.Solicitudes)
                         {
-                            <tr>
+                            <tr id="solicitud-row-@s.Id">
                                 <td class="px-4 py-3 text-muted" style="font-size:0.85rem;">@s.Id</td>
                                 <td class="py-3 fw-medium">S/ @s.MontoSolicitado.ToString("N2")</td>
                                 <td class="py-3 text-muted" style="font-size:0.9rem;">@s.FechaSolicitud.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
@@ -126,3 +126,7 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_WebSocketNotificaciones" />
+}

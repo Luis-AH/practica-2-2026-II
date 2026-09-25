@@ -625,6 +625,19 @@
           "buildTransitive/Mono.TextTemplating.targets": {}
         }
       },
+      "NaCl.Net/0.1.13": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/NaCl.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/NaCl.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Newtonsoft.Json/13.0.4": {
         "type": "package",
         "compile": {
@@ -649,6 +662,19 @@
           "lib/net5.0/Pipelines.Sockets.Unofficial.dll": {
             "related": ".xml"
           }
+        }
+      },
+      "PusherServer/5.0.0": {
+        "type": "package",
+        "dependencies": {
+          "NaCl.Net": "0.1.13",
+          "Newtonsoft.Json": "13.0.2"
+        },
+        "compile": {
+          "lib/netstandard2.0/PusherServer.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/PusherServer.dll": {}
         }
       },
       "SQLitePCLRaw.bundle_e_sqlite3/2.1.12": {
@@ -2444,6 +2470,27 @@
         "readme.md"
       ]
     },
+    "NaCl.Net/0.1.13": {
+      "sha512": "AVg1455RQnyTy6tiessudruZHvbl70QWRPyx3og2I1Fei17LDNc7Z3DRgqN2+PsySBui/1EDP4A7adhQXydi6g==",
+      "type": "package",
+      "path": "nacl.net/0.1.13",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/NaCl.dll",
+        "lib/net45/NaCl.xml",
+        "lib/net472/NaCl.dll",
+        "lib/net472/NaCl.xml",
+        "lib/netstandard1.3/NaCl.dll",
+        "lib/netstandard1.3/NaCl.xml",
+        "lib/netstandard2.0/NaCl.dll",
+        "lib/netstandard2.0/NaCl.xml",
+        "lib/netstandard2.1/NaCl.dll",
+        "lib/netstandard2.1/NaCl.xml",
+        "nacl.net.0.1.13.nupkg.sha512",
+        "nacl.net.nuspec"
+      ]
+    },
     "Newtonsoft.Json/13.0.4": {
       "sha512": "pdgNNMai3zv51W5aq268sujXUyx7SNdE2bj1wZcWjAQrKMFZV260lbqYop1d2GM67JI1huLRwxo9ZqnfF/lC6A==",
       "type": "package",
@@ -2495,6 +2542,25 @@
         "lib/netstandard2.1/Pipelines.Sockets.Unofficial.xml",
         "pipelines.sockets.unofficial.2.2.8.nupkg.sha512",
         "pipelines.sockets.unofficial.nuspec"
+      ]
+    },
+    "PusherServer/5.0.0": {
+      "sha512": "lRAlhMcf29ZEKNa/78SV0FsbNDLniMwaIYhFriQ+WBWDBPtPmE57q9HNZFXvhr7SkZebKLh4WdRc0khVhRrhLA==",
+      "type": "package",
+      "path": "pusherserver/5.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "CHANGELOG.md",
+        "PusherServer.public.snk",
+        "README.md",
+        "icon-128.png",
+        "lib/net45/PusherServer.dll",
+        "lib/net472/PusherServer.dll",
+        "lib/netstandard1.3/PusherServer.dll",
+        "lib/netstandard2.0/PusherServer.dll",
+        "pusherserver.5.0.0.nupkg.sha512",
+        "pusherserver.nuspec"
       ]
     },
     "SQLitePCLRaw.bundle_e_sqlite3/2.1.12": {
@@ -2800,7 +2866,8 @@
       "Microsoft.EntityFrameworkCore.Design >= 10.0.12",
       "Microsoft.EntityFrameworkCore.Sqlite >= 10.0.12",
       "Microsoft.EntityFrameworkCore.Tools >= 10.0.12",
-      "Microsoft.Extensions.Caching.StackExchangeRedis >= 10.0.12"
+      "Microsoft.Extensions.Caching.StackExchangeRedis >= 10.0.12",
+      "PusherServer >= 5.0.0"
     ]
   },
   "packageFolders": {
@@ -2876,6 +2943,10 @@
           "Microsoft.Extensions.Caching.StackExchangeRedis": {
             "target": "Package",
             "version": "[10.0.12, )"
+          },
+          "PusherServer": {
+            "target": "Package",
+            "version": "[5.0.0, )"
           }
         },
         "imports": [
