@@ -5,16 +5,23 @@ using PlataformaCreditos.Data;
 using PlataformaCreditos.Models;
 using System.ComponentModel.DataAnnotations;
 
+using Microsoft.Extensions.Caching.Distributed;
+using PlataformaCreditos.Services;
+
 namespace PlataformaCreditos.Controllers;
 
 [Authorize(Roles = "Analista")]
 public class AnalistaController : Controller
 {
     private readonly ApplicationDbContext _context;
+    private readonly NotificacionesService _notificacionesService;
+    private readonly IDistributedCache _cache;
 
-    public AnalistaController(ApplicationDbContext context)
+    public AnalistaController(ApplicationDbContext context, NotificacionesService notificacionesService, IDistributedCache cache)
     {
         _context = context;
+        _notificacionesService = notificacionesService;
+        _cache = cache;
     }
 
     // GET: /Analista
@@ -57,6 +64,16 @@ public class AnalistaController : Controller
         solicitud.Estado = EstadoSolicitud.Aprobado;
         await _context.SaveChangesAsync();
 
+        // Invalidar caché
+        await _cache.RemoveAsync($"solicitudes_cliente_{solicitud.ClienteId}");
+
+        // Notificar por WebSocket al cliente
+        if (solicitud.Cliente?.UsuarioId != null)
+        {
+            await _notificacionesService.EnviarEstadoActualizadoAsync(
+                solicitud.Cliente.UsuarioId, solicitud.Id, "Aprobado", "");
+        }
+
         TempData["SuccessMessage"] = $"La solicitud #{solicitud.Id} ha sido APROBADA exitosamente.";
         return RedirectToAction(nameof(Index));
     }
@@ -72,7 +89,9 @@ public class AnalistaController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-        var solicitud = await _context.Solicitudes.FindAsync(id);
+        var solicitud = await _context.Solicitudes
+            .Include(s => s.Cliente)
+            .FirstOrDefaultAsync(s => s.Id == id);
 
         if (solicitud == null) return NotFound();
 
@@ -86,6 +105,16 @@ public class AnalistaController : Controller
         solicitud.MotivoRechazo = motivo;
         
         await _context.SaveChangesAsync();
+
+        // Invalidar caché
+        await _cache.RemoveAsync($"solicitudes_cliente_{solicitud.ClienteId}");
+
+        // Notificar por WebSocket al cliente
+        if (solicitud.Cliente?.UsuarioId != null)
+        {
+            await _notificacionesService.EnviarEstadoActualizadoAsync(
+                solicitud.Cliente.UsuarioId, solicitud.Id, "Rechazado", motivo);
+        }
 
         TempData["SuccessMessage"] = $"La solicitud #{solicitud.Id} ha sido RECHAZADA.";
         return RedirectToAction(nameof(Index));

@@ -1,0 +1,90 @@
+@inject Microsoft.Extensions.Configuration.IConfiguration Config
+
+<script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+<script>
+    // Enable pusher logging - don't include this in production
+    // Pusher.logToConsole = true;
+
+    var userId = '@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value';
+    
+    if (userId) {
+        // Mostrar estado de conexión
+        var divEstado = document.createElement('div');
+        divEstado.id = 'ws-status';
+        divEstado.className = 'alert alert-info py-1 px-3 mt-3 small';
+        divEstado.innerHTML = 'Conectando a notificaciones en tiempo real...';
+        document.querySelector('.container').prepend(divEstado);
+
+        var pusher = new Pusher('@Config["PieSocket:ApiKey"]', {
+            cluster: '@Config["PieSocket:Cluster"]',
+            wsHost: '@Config["PieSocket:Cluster"]' + '.piesocket.com',
+            wsPort: 443,
+            forceTLS: true,
+            disableStats: true,
+            authEndpoint: '/hubs/solicitudes', // Endpoint protegido con Identity
+            auth: {
+                headers: {
+                    // Si usas CSRF global
+                }
+            }
+        });
+
+        pusher.connection.bind('state_change', function(states) {
+            var statusMsg = '';
+            if (states.current === 'connected') {
+                statusMsg = '✓ Conectado a notificaciones en tiempo real';
+                divEstado.className = 'alert alert-success py-1 px-3 mt-3 small';
+            } else if (states.current === 'connecting' || states.current === 'reconnecting') {
+                statusMsg = 'Conectando a notificaciones...';
+                divEstado.className = 'alert alert-warning py-1 px-3 mt-3 small';
+            } else {
+                statusMsg = 'Desconectado de notificaciones (intentando reconectar...)';
+                divEstado.className = 'alert alert-danger py-1 px-3 mt-3 small';
+                
+                // Si reconecta, la página debería recargar para obtener estado actual (requerido por rúbrica)
+                if (states.previous === 'connected') {
+                    setTimeout(() => window.location.reload(), 2000);
+                }
+            }
+            divEstado.innerHTML = statusMsg;
+        });
+
+        var channel = pusher.subscribe('private-solicitudes-' + userId);
+
+        channel.bind('SolicitudEstadoActualizado', function(data) {
+            // "Actualizar el estado mostrado y presentar un aviso sin recargar la página."
+            var aviso = document.createElement('div');
+            aviso.className = 'alert alert-primary alert-dismissible fade show mt-3 shadow-sm';
+            aviso.innerHTML = '<strong>¡Actualización!</strong> Tu solicitud #' + data.solicitudId + ' ha sido <b>' + data.estado.toUpperCase() + '</b>.' +
+                (data.motivoRechazo ? ' Motivo: ' + data.motivoRechazo : '') +
+                '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+            
+            document.querySelector('.container').prepend(aviso);
+
+            // Actualizar fila si estamos en Mis Solicitudes
+            var row = document.getElementById('solicitud-row-' + data.solicitudId);
+            if (row) {
+                var badge = row.querySelector('.badge-estado');
+                if (badge) {
+                    badge.innerHTML = data.estado;
+                    badge.className = 'badge badge-estado ' + (data.estado === 'Aprobado' ? 'bg-success' : 'bg-danger');
+                }
+            }
+
+            // Actualizar detalle si estamos en Detalle
+            var detalleBadge = document.getElementById('detalle-badge-estado');
+            if (detalleBadge) {
+                detalleBadge.innerHTML = data.estado;
+                detalleBadge.className = 'badge p-2 px-3 ' + (data.estado === 'Aprobado' ? 'bg-success' : 'bg-danger');
+                
+                if (data.estado === 'Rechazado' && data.motivoRechazo) {
+                    var motivoCont = document.getElementById('detalle-motivo');
+                    if (motivoCont) {
+                        motivoCont.style.display = 'block';
+                        motivoCont.innerHTML = '<strong>Motivo del rechazo:</strong> ' + data.motivoRechazo;
+                    }
+                }
+            }
+        });
+    }
+</script>

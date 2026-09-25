@@ -15,6 +15,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddSingleton<PlataformaCreditos.Services.NotificacionesService>();
+
 // Configurar Redis para caché distribuida
 var redisConnection = builder.Configuration.GetConnectionString("RedisConnection")!;
 builder.Services.AddStackExchangeRedisCache(options =>
