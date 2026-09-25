@@ -29,6 +29,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Solicitudes" asp-action="MisSolicitudes">Mis Solicitudes</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Notificaciones" asp-action="MisNotificaciones">Notificaciones</a>
+                            </li>
                         }
                         @if (Context.User.IsInRole("Analista"))
                         {

@@ -1,0 +1,46 @@
+@model IEnumerable<PlataformaCreditos.Models.Notificacion>
+
+@{
+    ViewData["Title"] = "Mis Notificaciones";
+}
+
+<div class="container py-4">
+    <div class="mb-4">
+        <h1 class="h3 fw-semibold mb-0" style="color:#1a1a1a;">Mis Notificaciones</h1>
+        <p class="text-muted mb-0" style="font-size:0.9rem;">Mensajes generados automáticamente al registrar tus solicitudes</p>
+    </div>
+
+    <div class="card">
+        <div class="card-body p-0">
+            @if (!Model.Any())
+            {
+                <div class="text-center py-5">
+                    <p class="text-muted mb-0">No tienes notificaciones aún. Se generarán al registrar una solicitud.</p>
+                </div>
+            }
+            else
+            {
+                <ul class="list-group list-group-flush">
+                    @foreach (var n in Model)
+                    {
+                        <li class="list-group-item px-4 py-3">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <p class="mb-1" style="font-size:0.95rem;">@n.Texto</p>
+                                    <small class="text-muted">
+                                        Procesado el @n.FechaProcesamientoUtc.ToLocalTime().ToString("dd/MM/yyyy HH:mm") UTC
+                                        <span class="ms-2 text-secondary" style="font-size:0.75rem;">ID: @n.MessageId</span>
+                                    </small>
+                                </div>
+                                <a asp-controller="Solicitudes" asp-action="Detalle" asp-route-id="@n.SolicitudId"
+                                   class="btn btn-sm btn-outline-secondary ms-3 flex-shrink-0">
+                                    Ver solicitud
+                                </a>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            }
+        </div>
+    </div>
+</div>
