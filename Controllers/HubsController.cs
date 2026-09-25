@@ -18,6 +18,18 @@ public class HubsController : Controller
         _userManager = userManager;
     }
 
+    [HttpGet]
+    [AllowAnonymous]
+    public IActionResult Index()
+    {
+        // Si alguien intenta entrar a /hubs/solicitudes desde el navegador (GET)
+        if (!User.Identity!.IsAuthenticated)
+        {
+            return RedirectToAction("Index", "Home");
+        }
+        return Unauthorized("Este endpoint es solo para conexiones WebSocket (POST).");
+    }
+
     [HttpPost]
     public async Task<IActionResult> Auth([FromForm] string socket_id, [FromForm] string channel_name)
     {

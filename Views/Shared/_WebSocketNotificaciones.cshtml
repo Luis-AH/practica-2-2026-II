@@ -38,35 +38,43 @@
 
         channel.bind('SolicitudEstadoActualizado', function(data) {
             // "Actualizar el estado mostrado y presentar un aviso sin recargar la página."
+            var estadoValue = data.estado || data.Estado;
+            var solicitudIdValue = data.solicitudId || data.SolicitudId;
+            var motivoValue = data.motivoRechazo || data.MotivoRechazo;
+
+            if (!estadoValue) return; // Prevención de errores
+
             var aviso = document.createElement('div');
             aviso.className = 'alert alert-primary alert-dismissible fade show mt-3 shadow-sm';
-            aviso.innerHTML = '<strong>¡Actualización!</strong> Tu solicitud #' + data.solicitudId + ' ha sido <b>' + data.estado.toUpperCase() + '</b>.' +
-                (data.motivoRechazo ? ' Motivo: ' + data.motivoRechazo : '') +
+            aviso.innerHTML = '<strong>¡Actualización!</strong> Tu solicitud #' + solicitudIdValue + ' ha sido <b>' + estadoValue.toUpperCase() + '</b>.' +
+                (motivoValue ? ' Motivo: ' + motivoValue : '') +
                 '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
             
             document.querySelector('.container').prepend(aviso);
 
             // Actualizar fila si estamos en Mis Solicitudes
-            var row = document.getElementById('solicitud-row-' + data.solicitudId);
+            var row = document.getElementById('solicitud-row-' + solicitudIdValue);
             if (row) {
                 var badge = row.querySelector('.badge-estado');
                 if (badge) {
-                    badge.innerHTML = data.estado;
-                    badge.className = 'badge badge-estado ' + (data.estado === 'Aprobado' ? 'bg-success' : 'bg-danger');
+                    badge.innerHTML = estadoValue;
+                    var badgeClass = estadoValue === 'Aprobado' ? 'badge-aprobado' : 'badge-rechazado';
+                    badge.className = 'badge-estado ' + badgeClass;
                 }
             }
 
             // Actualizar detalle si estamos en Detalle
             var detalleBadge = document.getElementById('detalle-badge-estado');
             if (detalleBadge) {
-                detalleBadge.innerHTML = data.estado;
-                detalleBadge.className = 'badge p-2 px-3 ' + (data.estado === 'Aprobado' ? 'bg-success' : 'bg-danger');
+                detalleBadge.innerHTML = estadoValue;
+                var detalleBadgeClass = estadoValue === 'Aprobado' ? 'bg-success' : 'bg-danger';
+                detalleBadge.className = 'badge p-2 px-3 text-white ' + detalleBadgeClass;
                 
-                if (data.estado === 'Rechazado' && data.motivoRechazo) {
+                if (estadoValue === 'Rechazado' && motivoValue) {
                     var motivoCont = document.getElementById('detalle-motivo');
                     if (motivoCont) {
                         motivoCont.style.display = 'block';
-                        motivoCont.innerHTML = '<strong>Motivo del rechazo:</strong> ' + data.motivoRechazo;
+                        motivoCont.innerHTML = '<strong>Motivo del rechazo:</strong> ' + motivoValue;
                     }
                 }
             }
