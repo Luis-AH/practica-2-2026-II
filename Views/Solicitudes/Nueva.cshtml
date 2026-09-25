@@ -1,0 +1,41 @@
+@model PlataformaCreditos.Models.ViewModels.NuevaSolicitudViewModel
+
+@{
+    ViewData["Title"] = "Nueva Solicitud de Crédito";
+}
+
+<div class="container py-4" style="max-width: 600px;">
+    <div class="mb-4">
+        <a asp-action="MisSolicitudes" class="text-decoration-none small text-muted">
+            &larr; Volver a Mis Solicitudes
+        </a>
+    </div>
+
+    <div class="card">
+        <div class="card-body p-5">
+            <h1 class="h4 fw-semibold mb-2" style="color:#1a1a1a;">Nueva Solicitud</h1>
+            <p class="text-muted mb-4 small">Ingresa el monto que deseas solicitar. Este será evaluado por nuestros analistas.</p>
+
+            <form asp-action="Nueva" method="post">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger p-3 small" style="border-radius:6px;"></div>
+
+                <div class="mb-4">
+                    <label asp-for="MontoSolicitado" class="form-label fw-medium">Monto a solicitar (S/)</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0 text-muted">S/</span>
+                        <input asp-for="MontoSolicitado" type="number" class="form-control border-start-0" placeholder="0.00" step="0.01" min="0" autocomplete="off" />
+                    </div>
+                    <span asp-validation-for="MontoSolicitado" class="text-danger small mt-1 d-block"></span>
+                </div>
+
+                <div class="d-grid mt-2">
+                    <button type="submit" class="btn btn-primary py-2 fw-medium">Enviar Solicitud</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
