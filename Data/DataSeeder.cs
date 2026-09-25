@@ -30,7 +30,7 @@ public static class DataSeeder
         var analistaUser = await userManager.FindByEmailAsync(analistaEmail);
         if (analistaUser == null)
         {
-            analistaUser = new IdentityUser { UserName = analistaEmail, Email = analistaEmail, EmailConfirmed = true };
+            analistaUser = new IdentityUser { Id = "analista-fixed-id", UserName = analistaEmail, Email = analistaEmail, EmailConfirmed = true };
             await userManager.CreateAsync(analistaUser, "Password123!");
             await userManager.AddToRoleAsync(analistaUser, "Analista");
         }
@@ -40,7 +40,7 @@ public static class DataSeeder
         var cliente1User = await userManager.FindByEmailAsync(cliente1Email);
         if (cliente1User == null)
         {
-            cliente1User = new IdentityUser { UserName = cliente1Email, Email = cliente1Email, EmailConfirmed = true };
+            cliente1User = new IdentityUser { Id = "cliente1-fixed-id", UserName = cliente1Email, Email = cliente1Email, EmailConfirmed = true };
             await userManager.CreateAsync(cliente1User, "Password123!");
             await userManager.AddToRoleAsync(cliente1User, "Cliente");
         }
@@ -49,7 +49,7 @@ public static class DataSeeder
         var cliente2User = await userManager.FindByEmailAsync(cliente2Email);
         if (cliente2User == null)
         {
-            cliente2User = new IdentityUser { UserName = cliente2Email, Email = cliente2Email, EmailConfirmed = true };
+            cliente2User = new IdentityUser { Id = "cliente2-fixed-id", UserName = cliente2Email, Email = cliente2Email, EmailConfirmed = true };
             await userManager.CreateAsync(cliente2User, "Password123!");
             await userManager.AddToRoleAsync(cliente2User, "Cliente");
         }
