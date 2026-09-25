@@ -28,9 +28,9 @@ public class NotificacionesService
         var eventName = "SolicitudEstadoActualizado";
         var payload = new 
         { 
-            SolicitudId = solicitudId, 
-            Estado = estado,
-            MotivoRechazo = motivo 
+            solicitudId = solicitudId, 
+            estado = estado,
+            motivoRechazo = motivo 
         };
 
         await _pusher.TriggerAsync(channel, eventName, payload);
