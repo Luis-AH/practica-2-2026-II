@@ -58,10 +58,6 @@
               "target": "Package",
               "version": "[10.0.12, )"
             },
-            "Microsoft.AspNetCore.Session": {
-              "target": "Package",
-              "version": "[2.3.13, )"
-            },
             "Microsoft.EntityFrameworkCore.Design": {
               "suppressParent": "All",
               "target": "Package",

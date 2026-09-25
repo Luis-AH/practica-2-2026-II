@@ -1,0 +1,114 @@
+@model IEnumerable<PlataformaCreditos.Models.SolicitudCredito>
+
+@{
+    ViewData["Title"] = "Panel de Analista";
+}
+
+<div class="container py-4">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>¡Éxito!</strong> @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Atención:</strong> @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="mb-4">
+        <h1 class="h3 fw-semibold mb-0" style="color:#1a1a1a;">Panel de Evaluaciones</h1>
+        <p class="text-muted mb-0" style="font-size:0.9rem;">Gestión de solicitudes de crédito pendientes</p>
+    </div>
+
+    <div class="card">
+        <div class="card-body p-0">
+            @if (!Model.Any())
+            {
+                <div class="text-center py-5">
+                    <p class="text-muted mb-0">No hay solicitudes pendientes en este momento.</p>
+                </div>
+            }
+            else
+            {
+                <table class="table table-hover mb-0">
+                    <thead style="background-color:#f8f9fa;">
+                        <tr>
+                            <th class="px-4 py-3 small fw-semibold text-muted">ID</th>
+                            <th class="py-3 small fw-semibold text-muted">Cliente (Email)</th>
+                            <th class="py-3 small fw-semibold text-muted">Ingresos (S/)</th>
+                            <th class="py-3 small fw-semibold text-muted">Solicitado (S/)</th>
+                            <th class="py-3 small fw-semibold text-muted">Monto Máx Permitido</th>
+                            <th class="py-3 small fw-semibold text-muted text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var s in Model)
+                        {
+                            var maxPermitido = s.Cliente!.IngresosMensuales * 5;
+                            var excedeLimite = s.MontoSolicitado > maxPermitido;
+
+                            <tr>
+                                <td class="px-4 py-3 text-muted" style="font-size:0.85rem;">#@s.Id</td>
+                                <td class="py-3 fw-medium">@s.Cliente.Usuario?.Email</td>
+                                <td class="py-3 text-muted">@s.Cliente.IngresosMensuales.ToString("N2")</td>
+                                <td class="py-3 fw-semibold @(excedeLimite ? "text-danger" : "text-success")">
+                                    @s.MontoSolicitado.ToString("N2")
+                                </td>
+                                <td class="py-3 text-muted">
+                                    <small>@maxPermitido.ToString("N2")</small>
+                                    @if(excedeLimite)
+                                    {
+                                        <br/><small class="text-danger">¡Excede regla 5x!</small>
+                                    }
+                                </td>
+                                <td class="py-3 text-center">
+                                    <div class="d-flex justify-content-center gap-2">
+                                        <form asp-action="Aprobar" method="post" style="display:inline;">
+                                            <input type="hidden" name="id" value="@s.Id" />
+                                            <button type="submit" class="btn btn-sm btn-success px-3" @(excedeLimite ? "disabled" : "") title="@(excedeLimite ? "No se puede aprobar. Excede 5 veces el ingreso." : "")">
+                                                Aprobar
+                                            </button>
+                                        </form>
+                                        <button type="button" class="btn btn-sm btn-outline-danger px-3" data-bs-toggle="modal" data-bs-target="#rechazarModal-@s.Id">
+                                            Rechazar
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Modal para Rechazar -->
+                            <div class="modal fade" id="rechazarModal-@s.Id" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <form asp-action="Rechazar" method="post">
+                                            <div class="modal-header border-bottom-0">
+                                                <h5 class="modal-title h6 fw-semibold">Rechazar Solicitud #@s.Id</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body py-0">
+                                                <input type="hidden" name="id" value="@s.Id" />
+                                                <div class="mb-3">
+                                                    <label class="form-label small fw-medium">Motivo del rechazo <span class="text-danger">*</span></label>
+                                                    <textarea name="motivo" class="form-control" rows="3" required placeholder="Explique brevemente por qué se rechaza la solicitud..."></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer border-top-0 pt-0">
+                                                <button type="button" class="btn btn-light btn-sm" data-bs-dismiss="modal">Cancelar</button>
+                                                <button type="submit" class="btn btn-danger btn-sm px-4">Confirmar Rechazo</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>

@@ -30,6 +30,12 @@
                                 <a class="nav-link" asp-controller="Solicitudes" asp-action="MisSolicitudes">Mis Solicitudes</a>
                             </li>
                         }
+                        @if (Context.User.IsInRole("Analista"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-warning fw-semibold" asp-controller="Analista" asp-action="Index">Panel Analista</a>
+                            </li>
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
