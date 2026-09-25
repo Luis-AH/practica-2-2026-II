@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "VI5plg+gm2k=",
+  "dgSpecHash": "apI9L1ZygTg=",
   "success": true,
   "projectFilePath": "C:\\Users\\LUIS\\Documents\\proyectos Progra I\\Practica-2\\PlataformaCreditos.csproj",
   "expectedPackageFiles": [
@@ -8,7 +8,6 @@
     "C:\\Users\\LUIS\\.nuget\\packages\\microsoft.aspnetcore.diagnostics.entityframeworkcore\\10.0.12\\microsoft.aspnetcore.diagnostics.entityframeworkcore.10.0.12.nupkg.sha512",
     "C:\\Users\\LUIS\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\10.0.12\\microsoft.aspnetcore.identity.entityframeworkcore.10.0.12.nupkg.sha512",
     "C:\\Users\\LUIS\\.nuget\\packages\\microsoft.aspnetcore.identity.ui\\10.0.12\\microsoft.aspnetcore.identity.ui.10.0.12.nupkg.sha512",
-    "C:\\Users\\LUIS\\.nuget\\packages\\microsoft.aspnetcore.session\\2.3.13\\microsoft.aspnetcore.session.2.3.13.nupkg.sha512",
     "C:\\Users\\LUIS\\.nuget\\packages\\microsoft.build.framework\\18.0.2\\microsoft.build.framework.18.0.2.nupkg.sha512",
     "C:\\Users\\LUIS\\.nuget\\packages\\microsoft.codeanalysis.analyzers\\3.11.0\\microsoft.codeanalysis.analyzers.3.11.0.nupkg.sha512",
     "C:\\Users\\LUIS\\.nuget\\packages\\microsoft.codeanalysis.common\\5.0.0\\microsoft.codeanalysis.common.5.0.0.nupkg.sha512",
@@ -45,18 +44,5 @@
     "C:\\Users\\LUIS\\.nuget\\packages\\system.composition.runtime\\9.0.0\\system.composition.runtime.9.0.0.nupkg.sha512",
     "C:\\Users\\LUIS\\.nuget\\packages\\system.composition.typedparts\\9.0.0\\system.composition.typedparts.9.0.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1510",
-      "level": "Warning",
-      "message": "PackageReference Microsoft.AspNetCore.Session no se eliminará. Este paquete está disponible automáticamente y no es necesario hacer referencia a él explícitamente. Quite el elemento PackageReference.",
-      "projectPath": "C:\\Users\\LUIS\\Documents\\proyectos Progra I\\Practica-2\\PlataformaCreditos.csproj",
-      "warningLevel": 1,
-      "filePath": "C:\\Users\\LUIS\\Documents\\proyectos Progra I\\Practica-2\\PlataformaCreditos.csproj",
-      "libraryId": "Microsoft.AspNetCore.Session",
-      "targetGraphs": [
-        "net10.0"
-      ]
-    }
-  ]
+  "logs": []
 }
